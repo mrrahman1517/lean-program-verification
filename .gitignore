@@ -1,0 +1,45 @@
+# Lean 4 build artifacts
+.lake/
+lake-packages/
+lakefile.olean
+
+# Build outputs
+build/
+*.olean
+*.ilean
+*.c
+*.o
+
+# Lake manifest (can be regenerated)
+lake-manifest.json
+
+# VS Code settings (optional, remove if you want to share settings)
+.vscode/
+
+# macOS
+.DS_Store
+
+# Temporary files
+*.tmp
+*.temp
+*~
+
+# Backup files
+*.bak
+*.orig
+
+# Log files
+*.log
+
+# Editor temporary files
+.#*
+\#*#
+
+# Python cache (if using Python for comparisons)
+__pycache__/
+*.pyc
+*.pyo
+
+# Lean-specific temporary files
+.lean_trace
+lean_trace.txt
