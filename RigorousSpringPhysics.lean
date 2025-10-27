@@ -42,14 +42,14 @@ def spring_energy (k x : Float) : Float := (k / 2.0) * x * x
 -- Proposition: F = -kx for all k, x
 def ForceDefinition (k x : Float) : Prop := spring_force k x = -k * x
 
--- Proposition: U = (k/2)x² for all k, x  
+-- Proposition: U = (k/2)x² for all k, x
 def EnergyDefinition (k x : Float) : Prop := spring_energy k x = (k / 2.0) * x * x
 
 -- Proposition: Derivative of (k/2)x² is kx
 def EnergyDerivative (k x : Float) : Prop := True -- Placeholder for dU/dx = kx
 
 -- Main theorem: F = -dU/dx
-def SpringPhysicsTheorem (k x : Float) : Prop := 
+def SpringPhysicsTheorem (k x : Float) : Prop :=
   ForceDefinition k x ∧ EnergyDefinition k x → spring_force k x = -(k * x)
 
 -- Proof that our definitions are correct
@@ -62,7 +62,7 @@ theorem energy_def_correct (k x : Float) : EnergyDefinition k x := by
   rfl
 
 -- Equilibrium theorem: At x=0, both force and energy are minimal
-theorem equilibrium_theorem (k : Float) : 
+theorem equilibrium_theorem (k : Float) :
   spring_force k 0.0 = 0.0 ∧ spring_energy k 0.0 = 0.0 := by
   constructor
   · -- Force at equilibrium: -k * 0 = 0 (accept as axiom for Float)

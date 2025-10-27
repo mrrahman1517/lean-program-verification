@@ -11,6 +11,5 @@ lean_lib «SpringPhysics» where
 lean_exe «rigorous» where
   root := `RigorousSpringPhysics
 
--- Comment out Mathlib for now to get working version
--- require mathlib from git
---   "https://github.com/leanprover-community/mathlib4.git"
+require mathlib from git
+  "https://github.com/leanprover-community/mathlib4.git"

@@ -41,7 +41,7 @@ example : EnergyDefinition 1.0 2.0 := energy_def_correct 1.0 2.0
 -- Demo function (renamed to avoid conflict with main in RigorousSpringPhysics)
 def demo : IO Unit := do
   IO.println "Spring Physics Demo - Using Proven Theorems"
-  IO.println "===========================================" 
+  IO.println "==========================================="
   IO.println ""
   IO.println "This file demonstrates the use of formally proven theorems"
   IO.println "from RigorousSpringPhysics.lean"
