@@ -38,7 +38,7 @@ theorem force_energy_relationship_concept (k x : ℝ) :
 
 -- This represents the derivative relationship conceptually
 theorem derivative_concept (k x : ℝ) :
-  ∃ derivative_of_energy : ℝ, derivative_of_energy = k * x ∧ 
+  ∃ derivative_of_energy : ℝ, derivative_of_energy = k * x ∧
   force k x = -derivative_of_energy := by
   use k * x
   constructor
