@@ -17,5 +17,8 @@ lean_exe «helloworld» where
 lean_exe «test_factorial» where
   root := `test_factorial
 
+lean_exe «hello_world_01» where
+  root := `hello_world_01
+
 require mathlib from git
   "https://github.com/leanprover-community/mathlib4.git"
