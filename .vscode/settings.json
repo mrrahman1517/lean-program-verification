@@ -1,0 +1,67 @@
+{
+  "lean4.elaborationDelay": 200,
+  "lean4.diagnosticsDelay": 1000,
+  "lean4.infoDelay": 300,
+  "editor.suggest.showWords": true,
+  "editor.suggest.showSnippets": true,
+  "editor.suggest.localityBonus": true,
+  "editor.quickSuggestions": {
+    "other": true,
+    "comments": false,
+    "strings": false
+  },
+  "editor.suggestOnTriggerCharacters": true,
+  "editor.tabCompletion": "on",
+  "editor.acceptSuggestionOnTab": "smart",
+  "editor.suggest.insertMode": "insert",
+  "editor.wordBasedSuggestions": "matchingDocuments",
+  "files.autoSave": "afterDelay",
+  "files.autoSaveDelay": 1000,
+  
+  // Auto-indentation settings
+  "editor.autoIndent": "full",
+  "editor.insertSpaces": true,
+  "editor.tabSize": 2,
+  "editor.detectIndentation": false,
+  "editor.useTabStops": true,
+  "editor.indentSize": "tabSize",
+  
+  // Language-specific settings for Lean
+  "[lean4]": {
+    "editor.insertSpaces": true,
+    "editor.tabSize": 2,
+    "editor.autoIndent": "full",
+    "editor.formatOnType": true,
+    "editor.formatOnPaste": true,
+    "editor.wordWrap": "off",
+    "editor.autoClosingBrackets": "always",
+    "editor.autoClosingQuotes": "always",
+    "editor.autoSurround": "languageDefined",
+    "editor.suggest.insertMode": "insert"
+  },
+  
+  "[lean]": {
+    "editor.insertSpaces": true,
+    "editor.tabSize": 2,
+    "editor.autoIndent": "full",
+    "editor.formatOnType": true,
+    "editor.formatOnPaste": true,
+    "editor.wordWrap": "off"
+  },
+  
+  // Additional smart indentation
+  "editor.smartIndent": true,
+  "editor.autoClosingBrackets": "always",
+  "editor.autoClosingQuotes": "always",
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.indentation": true,
+  "editor.renderWhitespace": "boundary",
+  "editor.trimAutoWhitespace": true,
+  "editor.autoClosingDelete": "always",
+  "editor.autoClosingOvertype": "always",
+  
+  // Enhanced indentation rules
+  "editor.indentUnit": "inherit",
+  "editor.keepIndentationOnIndentWithTab": true,
+  "editor.tabFocusMode": false
+}
