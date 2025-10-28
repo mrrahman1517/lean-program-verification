@@ -2,21 +2,26 @@
   {
     "key": "enter",
     "command": "editor.action.insertLineAfter",
-    "when": "editorTextFocus && editorLangId == 'lean4' && !editorHasSelection"
+    "when": "editorTextFocus && editorLangId == 'lean4' && !editorHasSelection && !inSnippetMode && !suggestWidgetVisible"
+  },
+  {
+    "key": "enter", 
+    "command": "acceptSelectedSuggestion",
+    "when": "editorTextFocus && editorLangId == 'lean4' && suggestWidgetVisible"
   },
   {
     "key": "tab",
     "command": "editor.action.indentLines",
-    "when": "editorTextFocus && !editorReadonly && !editorTabMovesFocus && editorLangId == 'lean4' && !inSnippetMode && !hasOtherSuggestions"
-  },
-  {
-    "key": "shift+tab",
-    "command": "editor.action.outdentLines",
-    "when": "editorTextFocus && !editorReadonly && editorLangId == 'lean4'"
+    "when": "editorTextFocus && !editorReadonly && !editorTabMovesFocus && editorLangId == 'lean4' && !inSnippetMode && !suggestWidgetVisible"
   },
   {
     "key": "tab",
     "command": "acceptSelectedSuggestion",
     "when": "editorTextFocus && suggestWidgetVisible && editorLangId == 'lean4'"
+  },
+  {
+    "key": "shift+tab",
+    "command": "editor.action.outdentLines",
+    "when": "editorTextFocus && !editorReadonly && editorLangId == 'lean4'"
   }
 ]

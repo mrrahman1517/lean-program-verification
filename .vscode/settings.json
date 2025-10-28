@@ -2,6 +2,10 @@
   "lean4.elaborationDelay": 200,
   "lean4.diagnosticsDelay": 1000,
   "lean4.infoDelay": 300,
+  "lean4.server.options": {
+    "autoImplicit": true
+  },
+  "lean4.input.enabled": true,
   "editor.suggest.showWords": true,
   "editor.suggest.showSnippets": true,
   "editor.suggest.localityBonus": true,
@@ -25,6 +29,9 @@
   "editor.detectIndentation": false,
   "editor.useTabStops": true,
   "editor.indentSize": "tabSize",
+  "editor.autoIndentOnPaste": true,
+  "editor.formatOnType": true,
+  "editor.formatOnPaste": true,
   
   // Language-specific settings for Lean
   "[lean4]": {
@@ -37,7 +44,13 @@
     "editor.autoClosingBrackets": "always",
     "editor.autoClosingQuotes": "always",
     "editor.autoSurround": "languageDefined",
-    "editor.suggest.insertMode": "insert"
+    "editor.suggest.insertMode": "insert",
+    "editor.quickSuggestions": {
+      "other": true,
+      "comments": false,
+      "strings": false
+    },
+    "editor.acceptSuggestionOnEnter": "on"
   },
   
   "[lean]": {
