@@ -48,14 +48,73 @@ The project verifies fundamental relationships in spring physics:
 ```bash
 # Clone the repository
 git clone https://github.com/mrrahman1517/lean-program-verification.git
-cd lean-program-verification
+cd lean-program-verification/SpringPhysics
 
 # Build the project
 lake build
 
-# Run the main verification program
-lake exe rigorous
+# Run existing programs
+lake exe rigorous        # Main verification program
+lake exe helloworld     # Hello world example
+lake exe test_factorial  # Factorial computation example
 ```
+
+## 🎮 Running Any Lean File
+
+This project includes several convenient methods to run any Lean file:
+
+### **Method 1: Direct Execution (Simplest)**
+```bash
+lean --run filename.lean    # Works for any .lean file with main function
+```
+
+### **Method 2: Using Helper Scripts**
+
+The project includes several utility scripts to make development easier:
+
+```bash
+# Run any existing Lean file
+./run_lean.sh filename.lean
+
+# Create a new Lean file from template and run it
+./new_lean.sh myprogram    # Creates myprogram.lean and runs it
+
+# Add an existing Lean file as a permanent executable to lakefile.lean
+./add_executable.sh myprogram    # Adds myprogram to build system
+```
+
+### **Method 3: Manual Lake Configuration**
+
+To permanently add a new executable to the project:
+
+1. Edit `lakefile.lean` and add:
+   ```lean
+   lean_exe «your_program_name» where
+     root := `your_program_name
+   ```
+
+2. Build and run:
+   ```bash
+   lake build your_program_name
+   lake exe your_program_name
+   ```
+
+### **Creating New Lean Programs**
+
+Any Lean file with a `main` function can be executed. Here's a template:
+
+```lean
+def main : IO Unit := do
+  IO.println "Hello from Lean!"
+  -- Add your code here
+```
+
+### **Available Utility Scripts**
+
+- **`run_lean.sh`**: Simple wrapper for `lean --run` with error checking
+- **`new_lean.sh`**: Create new Lean file from template and run immediately  
+- **`add_executable.sh`**: Add existing file to lakefile for permanent builds
+- **`add_and_run.sh`**: Combine adding to lakefile and running (experimental)
 
 ## 🎓 Educational Value
 
