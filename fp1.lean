@@ -187,6 +187,46 @@ def bool_to_nat (b : Bool) : Nat :=
 #eval bool_to_nat false  -- Expected: 0
 -- ▼ EVAL OUTPUT: 0
 
+
+
+
+-- NOT FUNCTION: Boolean negation using pattern matching
+-- Takes a boolean value and returns its logical negation.
+-- If input is false, returns true; if input is true, returns false.
+def not1 (b : Bool) : Bool :=
+    match b with
+    | false => true   -- Negation of false is true
+    | true => false   -- Negation of true is false
+
+#eval not1 false  -- Expected: true
+#eval not1 true   -- Expected: false
+
+-- AND FUNCTION: Boolean conjunction using pattern matching
+-- Returns true only if both inputs are true; otherwise returns false.
+-- If first input is false, returns false immediately (short-circuit).
+def and1 (b1 : Bool) (b2 : Bool) : Bool :=
+    match b1 with
+    | false => false
+    | true => b2
+
+#eval and1 false false  -- Expected: false
+#eval and1 false true   -- Expected: false
+#eval and1 true false   -- Expected: false
+#eval and1 true true    -- Expected: true
+
+-- OR FUNCTION: Boolean disjunction using pattern matching
+-- Returns true if at least one input is true; otherwise returns false.
+-- If first input is true, returns true immediately (short-circuit).
+def or1 (b1: Bool) (b2: Bool) : Bool :=
+    match b1 with
+    | false => b2   -- If first is false, result depends on second
+    | true => true  -- If first is true, always true
+
+#eval or1 false false  -- Expected: false
+#eval or1 false true   -- Expected: true
+#eval or1 true false   -- Expected: true
+#eval or1 true true    -- Expected: true
+
 -- =============================================================================
 -- MAIN FUNCTION: Testing All Definitions
 -- =============================================================================
