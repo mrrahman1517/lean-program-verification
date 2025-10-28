@@ -8,6 +8,13 @@
   "lean4.input.enabled": true,
   "editor.suggest.showWords": true,
   "editor.suggest.showSnippets": true,
+  
+  // Highlight current line for better navigation
+  "editor.renderLineHighlight": "all",
+  "workbench.colorCustomizations": {
+    "editor.lineHighlightBackground": "#1e3a8a20",
+    "editor.lineHighlightBorder": "#3b82f690"
+  },
   "editor.suggest.localityBonus": true,
   "editor.quickSuggestions": {
     "other": true,
