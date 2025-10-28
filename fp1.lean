@@ -260,6 +260,23 @@ def main : IO Unit := do
     IO.println s!"safe_div(10,0) = {safe_div 10 0}"
     IO.println ""
 
+    -- Test boolean ops
+    IO.println "boolean logic:"
+    IO.println s!"and1(false, false) = {and1 false false}"
+    IO.println s!"and1(false, true) = {and1 false true}"
+    IO.println s!"and1(true, false) = {and1 true false}"
+    IO.println s!"and1(true, true) = {and1 true true}"
+
+    IO.println s!"or1(false, false) = {or1 false false}"
+    IO.println s!"or1(false, true) = {or1 false true}"
+    IO.println s!"or1(true, false) = {or1 true false}"
+    IO.println s!"or1(true, true) = {or1 true true}"
+
+    IO.println s!"not1(false) = {not1 false}"
+    IO.println s!"not1(true) = {not1 true}"
+
+
+
     IO.println "All pattern matching examples completed!"
 
 #eval fact1 5
