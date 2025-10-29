@@ -280,3 +280,86 @@ def main : IO Unit := do
     IO.println "All pattern matching examples completed!"
 
 #eval fact1 5
+
+#eval String.append "Who is the greatest theoretical physicist, it is " (if 1 > 2 then "Fermi" else "Dirac" )
+
+#eval String.append "Who is the greatest theoretical physicist, it is " (if 10 > 2 then "Fermi" else "Dirac" )
+
+#eval String.append "it is" "it"
+
+#eval 42 +19
+
+#eval String.append "A" (String.append "B" "C")
+
+#eval String.append (String.append "A" "B") "C"
+
+#eval if 3 == 3 then 5 else 7
+
+#eval if 3 == 4 then "equal" else "not equal"
+
+#eval (1 + 2 : Nat)
+
+--#eval (1 + "2") -- does not compile
+
+#eval (1 -2 : Nat) -- Nat
+
+#eval (1 - 2 : Int)
+
+#check (1 - 2) -- #check allows us to inspect the type of an expression
+
+#eval 12122323232323232323232323323232323 + 34343434343434343434343 + 34343434343434333434343434433
+
+#check 12122323232323232323232323323232323 + 34343434343434343434343 + 34343434343434333434343434433
+
+def hello (person : String) : String := String.append "hello " person
+
+#check hello
+#eval hello "Witten"
+#eval hello "Penrose"
+#eval hello "Weinberg"
+
+def add1v2 (n : Nat) : Nat := n + 1
+#eval add1v2 37
+
+def maximum (n : Nat) (m : Nat) : Nat :=
+    if n < m then m
+    else n
+
+#check maximum
+#check (maximum)
+#eval maximum 45 78
+
+def threeSum (n1: Nat) (n2: Nat) (n3: Nat): Nat :=
+    n1 + n2 + n3
+
+#check (threeSum)
+#check (threeSum 1)
+#check (threeSum 1 2)
+#check (threeSum 1 2 3)
+
+def spaceBetween (first : String) (second: String) : String :=
+    String.append first (String.append " " second)
+
+#check spaceBetween
+#eval spaceBetween "Paul" "Dirac"
+
+#eval maximum (2 +45) (7+90)
+
+def joinStringsWith (first: String) (second: String) (third: String): String :=
+    String.append second (String.append first third)
+
+#check (joinStringsWith)
+#check (joinStringsWith ", ")
+#eval joinStringsWith ", " "one" "and another"
+#eval joinStringsWith "+" "2" "3"
+
+-- VOLUME FUNCTION: Calculates the volume of a rectangular box (cuboid)
+-- Multiplies height, width, and depth to get the total volume
+def volume (height: Nat) (width: Nat) (depth: Nat) : Nat := height * width * depth
+
+-- #check shows the type of the function (Nat → Nat → Nat → Nat)
+#check (volume)
+-- #check shows the type after partially applying one argument (Nat → Nat → Nat)
+#check (volume 2)
+-- #eval computes the volume for height=2, width=3, depth=4 (should be 24)
+#eval (volume 2 3 4)  -- Expected: 24
