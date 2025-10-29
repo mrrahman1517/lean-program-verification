@@ -1,12 +1,15 @@
 -- Basic arithmetic functions
+-- add1: Increments a natural number by 1
 def add1 (n : Nat) : Nat := n + 1
 
 #eval add1 7
 
+-- add2: Adds two natural numbers
 def add2 (n : Nat)(m : Nat) := n + m
 
 #eval add2 7 2
 
+-- Direct evaluation of an arithmetic expression
 #eval 1 + 2
 
 -- =============================================================================
@@ -20,6 +23,7 @@ def fact1 (n : Nat) : Nat :=
     | 0 => 1                    -- Base case: factorial of 0 is 1
     | k + 1 => (k + 1) * fact1 k -- Recursive case: n! = n * (n-1)!
 
+-- Test fact1 with various inputs
 #eval fact1 5  -- Expected: 120
 #eval fact1 0  -- Expected: 1
 #eval fact1 1  -- Expected: 1
@@ -32,6 +36,7 @@ def fact2 (n : Nat) : Nat :=
     | Nat.zero => 1             -- Base case using Nat.zero
     | Nat.succ k => (k + 1) * fact2 k -- Recursive case using Nat.succ
 
+-- Test fact2 with various inputs
 #eval fact2 5  -- Expected: 120
 #eval fact2 0  -- Expected: 1
 #eval fact2 4  -- Expected: 24
@@ -44,6 +49,7 @@ def fact3 (n : Nat) : Nat :=
     | 1 => 1                    -- factorial(1) = 1
     | n + 1 => (n + 1) * fact3 n -- General recursive case
 
+-- Test fact3 with various inputs
 #eval fact3 5  -- Expected: 120
 #eval fact3 1  -- Expected: 1
 #eval fact3 2  -- Expected: 2
@@ -61,9 +67,9 @@ def fact4 (n : Nat) : Nat :=
 -- ═══════════════════════════════════════════════════════════════════════════════
 -- 🧮 FACTORIAL EVALUATION TESTS
 -- ═══════════════════════════════════════════════════════════════════════════════
+-- Test fact4 with various inputs
 #eval fact4 5  -- Expected: 120
 -- ▼ EVAL OUTPUT: 120
-
 #eval fact4 3  -- Expected: 6
 -- ▼ EVAL OUTPUT: 6
 
@@ -81,18 +87,15 @@ def fib (n : Nat) : Nat :=
 -- ═══════════════════════════════════════════════════════════════════════════════
 -- 🔢 FIBONACCI EVALUATION TESTS
 -- ═══════════════════════════════════════════════════════════════════════════════
+-- Test Fibonacci with various inputs
 #eval fib 0   -- Expected: 0
 -- ▼ EVAL OUTPUT: 0
-
 #eval fib 1   -- Expected: 1
 -- ▼ EVAL OUTPUT: 1
-
 #eval fib 2   -- Expected: 1
 -- ▼ EVAL OUTPUT: 1
-
 #eval fib 5   -- Expected: 5
 -- ▼ EVAL OUTPUT: 5
-
 #eval fib 10  -- Expected: 55
 -- ▼ EVAL OUTPUT: 55
 
@@ -109,12 +112,11 @@ def sum_list (lst : List Nat) : Nat :=
 -- ═══════════════════════════════════════════════════════════════════════════════
 -- 📋 LIST SUM EVALUATION TESTS
 -- ═══════════════════════════════════════════════════════════════════════════════
+-- Test sum_list with empty and non-empty lists
 #eval sum_list []           -- Expected: 0
 -- ▼ EVAL OUTPUT: 0
-
 #eval sum_list [1, 2, 3, 4] -- Expected: 10
 -- ▼ EVAL OUTPUT: 10
-
 #eval sum_list [5]          -- Expected: 5
 -- ▼ EVAL OUTPUT: 5
 
@@ -127,9 +129,9 @@ def list_length (lst : List α) : Nat :=
 -- ═══════════════════════════════════════════════════════════════════════════════
 -- 📏 LIST LENGTH EVALUATION TESTS
 -- ═══════════════════════════════════════════════════════════════════════════════
+-- Test list_length with lists of different types
 #eval list_length ([] : List Nat)        -- Expected: 0
 -- ▼ EVAL OUTPUT: 0
-
 #eval list_length [1, 2, 3]              -- Expected: 3
 -- ▼ EVAL OUTPUT: 3
 #eval list_length ["a", "b", "c", "d"]   -- Expected: 4
@@ -144,12 +146,11 @@ def safe_div (a b : Nat) : Option Nat :=
     | 0 => none                 -- Division by zero returns none
     | _ => some (a / b)         -- Valid division returns some result
 
+-- Test safe_div with valid and invalid divisors
 #eval safe_div 10 2  -- Expected: some 5
 -- ▼ EVAL OUTPUT: some 5
-
 #eval safe_div 10 0  -- Expected: none
 -- ▼ EVAL OUTPUT: none
-
 #eval safe_div 7 3   -- Expected: some 2
 -- ▼ EVAL OUTPUT: some 2
 
@@ -162,9 +163,9 @@ def get_or_default (opt : Option Nat) (default : Nat) : Nat :=
 -- ═══════════════════════════════════════════════════════════════════════════════
 -- 🔍 OPTION EXTRACTION EVALUATION TESTS
 -- ═══════════════════════════════════════════════════════════════════════════════
+-- Test get_or_default with present and missing values
 #eval get_or_default (some 42) 0    -- Expected: 42
 -- ▼ EVAL OUTPUT: 42
-
 #eval get_or_default none 99        -- Expected: 99
 -- ▼ EVAL OUTPUT: 99
 
@@ -181,9 +182,9 @@ def bool_to_nat (b : Bool) : Nat :=
 -- ═══════════════════════════════════════════════════════════════════════════════
 -- ✅ BOOLEAN CONVERSION EVALUATION TESTS
 -- ═══════════════════════════════════════════════════════════════════════════════
+-- Test bool_to_nat with both boolean values
 #eval bool_to_nat true   -- Expected: 1
 -- ▼ EVAL OUTPUT: 1
-
 #eval bool_to_nat false  -- Expected: 0
 -- ▼ EVAL OUTPUT: 0
 
@@ -198,6 +199,7 @@ def not1 (b : Bool) : Bool :=
     | false => true   -- Negation of false is true
     | true => false   -- Negation of true is false
 
+-- Test not1 (boolean negation)
 #eval not1 false  -- Expected: true
 #eval not1 true   -- Expected: false
 
@@ -209,6 +211,7 @@ def and1 (b1 : Bool) (b2 : Bool) : Bool :=
     | false => false
     | true => b2
 
+-- Test and1 (boolean conjunction)
 #eval and1 false false  -- Expected: false
 #eval and1 false true   -- Expected: false
 #eval and1 true false   -- Expected: false
@@ -222,6 +225,7 @@ def or1 (b1: Bool) (b2: Bool) : Bool :=
     | false => b2   -- If first is false, result depends on second
     | true => true  -- If first is true, always true
 
+-- Test or1 (boolean disjunction)
 #eval or1 false false  -- Expected: false
 #eval or1 false true   -- Expected: true
 #eval or1 true false   -- Expected: true
@@ -279,75 +283,102 @@ def main : IO Unit := do
 
     IO.println "All pattern matching examples completed!"
 
+-- Redundant test for fact1 (already tested above)
 #eval fact1 5
 
+-- String concatenation with conditional
 #eval String.append "Who is the greatest theoretical physicist, it is " (if 1 > 2 then "Fermi" else "Dirac" )
 
+-- String concatenation with conditional (true branch)
 #eval String.append "Who is the greatest theoretical physicist, it is " (if 10 > 2 then "Fermi" else "Dirac" )
 
+-- Simple string concatenation
 #eval String.append "it is" "it"
 
+-- Simple arithmetic
 #eval 42 +19
 
+-- Nested string concatenation
 #eval String.append "A" (String.append "B" "C")
 
+-- Nested string concatenation (different grouping)
 #eval String.append (String.append "A" "B") "C"
 
+-- Conditional expression (true branch)
 #eval if 3 == 3 then 5 else 7
 
+-- Conditional expression (false branch)
 #eval if 3 == 4 then "equal" else "not equal"
 
+-- Explicit type annotation for arithmetic
 #eval (1 + 2 : Nat)
 
 --#eval (1 + "2") -- does not compile
 
+-- Subtraction with Nat (result is 0 if negative)
 #eval (1 -2 : Nat) -- Nat
 
+-- Subtraction with Int (can be negative)
 #eval (1 - 2 : Int)
 
-#check (1 - 2) -- #check allows us to inspect the type of an expression
+-- #check allows us to inspect the type of an expression
+#check (1 - 2)
 
+-- Large integer addition
 #eval 12122323232323232323232323323232323 + 34343434343434343434343 + 34343434343434333434343434433
 
+-- #check for large integer addition
 #check 12122323232323232323232323323232323 + 34343434343434343434343 + 34343434343434333434343434433
 
+-- hello: Greets a person by name
 def hello (person : String) : String := String.append "hello " person
 
+-- #check and #eval for hello
 #check hello
 #eval hello "Witten"
 #eval hello "Penrose"
 #eval hello "Weinberg"
 
+-- add1v2: Another increment function
 def add1v2 (n : Nat) : Nat := n + 1
 #eval add1v2 37
 
+-- maximum: Returns the larger of two natural numbers
 def maximum (n : Nat) (m : Nat) : Nat :=
     if n < m then m
     else n
 
+-- #check and #eval for maximum
 #check maximum
 #check (maximum)
 #eval maximum 45 78
 
+-- threeSum: Sums three natural numbers
 def threeSum (n1: Nat) (n2: Nat) (n3: Nat): Nat :=
     n1 + n2 + n3
 
+-- #check for threeSum and partial application
 #check (threeSum)
 #check (threeSum 1)
 #check (threeSum 1 2)
 #check (threeSum 1 2 3)
 
+-- spaceBetween: Concatenates two strings with a space in between
 def spaceBetween (first : String) (second: String) : String :=
     String.append first (String.append " " second)
 
+-- #check and #eval for spaceBetween
 #check spaceBetween
 #eval spaceBetween "Paul" "Dirac"
 
+-- Test maximum with arithmetic expressions
 #eval maximum (2 +45) (7+90)
 
+-- joinStringsWith: Concatenates three strings in a custom order
 def joinStringsWith (first: String) (second: String) (third: String): String :=
     String.append second (String.append first third)
 
+-- #check and #eval for joinStringsWith
 #check (joinStringsWith)
 #check (joinStringsWith ", ")
 #eval joinStringsWith ", " "one" "and another"
