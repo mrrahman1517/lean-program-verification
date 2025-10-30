@@ -2,11 +2,13 @@
 -- add1: Increments a natural number by 1
 def add1 (n : Nat) : Nat := n + 1
 
+-- Example: increment 7 by 1
 #eval add1 7
 
 -- add2: Adds two natural numbers
 def add2 (n : Nat)(m : Nat) := n + m
 
+-- Example: add 7 and 2
 #eval add2 7 2
 
 -- Direct evaluation of an arithmetic expression
@@ -70,6 +72,7 @@ def fact4 (n : Nat) : Nat :=
 -- Test fact4 with various inputs
 #eval fact4 5  -- Expected: 120
 -- ▼ EVAL OUTPUT: 120
+-- Example: fact4 with input 3
 #eval fact4 3  -- Expected: 6
 -- ▼ EVAL OUTPUT: 6
 
@@ -92,10 +95,13 @@ def fib (n : Nat) : Nat :=
 -- ▼ EVAL OUTPUT: 0
 #eval fib 1   -- Expected: 1
 -- ▼ EVAL OUTPUT: 1
+-- Example: fib with input 2
 #eval fib 2   -- Expected: 1
 -- ▼ EVAL OUTPUT: 1
+-- Example: fib with input 5
 #eval fib 5   -- Expected: 5
 -- ▼ EVAL OUTPUT: 5
+-- Example: fib with input 10
 #eval fib 10  -- Expected: 55
 -- ▼ EVAL OUTPUT: 55
 
@@ -117,6 +123,7 @@ def sum_list (lst : List Nat) : Nat :=
 -- ▼ EVAL OUTPUT: 0
 #eval sum_list [1, 2, 3, 4] -- Expected: 10
 -- ▼ EVAL OUTPUT: 10
+-- Example: sum_list with a single-element list
 #eval sum_list [5]          -- Expected: 5
 -- ▼ EVAL OUTPUT: 5
 
@@ -134,6 +141,7 @@ def list_length (lst : List α) : Nat :=
 -- ▼ EVAL OUTPUT: 0
 #eval list_length [1, 2, 3]              -- Expected: 3
 -- ▼ EVAL OUTPUT: 3
+-- Example: list_length with a string list
 #eval list_length ["a", "b", "c", "d"]   -- Expected: 4
 
 -- =============================================================================
@@ -151,6 +159,7 @@ def safe_div (a b : Nat) : Option Nat :=
 -- ▼ EVAL OUTPUT: some 5
 #eval safe_div 10 0  -- Expected: none
 -- ▼ EVAL OUTPUT: none
+-- Example: safe_div with 7 divided by 3
 #eval safe_div 7 3   -- Expected: some 2
 -- ▼ EVAL OUTPUT: some 2
 
@@ -164,8 +173,10 @@ def get_or_default (opt : Option Nat) (default : Nat) : Nat :=
 -- 🔍 OPTION EXTRACTION EVALUATION TESTS
 -- ═══════════════════════════════════════════════════════════════════════════════
 -- Test get_or_default with present and missing values
+-- Example: get_or_default with present value
 #eval get_or_default (some 42) 0    -- Expected: 42
 -- ▼ EVAL OUTPUT: 42
+-- Example: get_or_default with missing value
 #eval get_or_default none 99        -- Expected: 99
 -- ▼ EVAL OUTPUT: 99
 
@@ -200,6 +211,7 @@ def not1 (b : Bool) : Bool :=
     | true => false   -- Negation of true is false
 
 -- Test not1 (boolean negation)
+-- Example: not1 with false and true
 #eval not1 false  -- Expected: true
 #eval not1 true   -- Expected: false
 
@@ -212,6 +224,7 @@ def and1 (b1 : Bool) (b2 : Bool) : Bool :=
     | true => b2
 
 -- Test and1 (boolean conjunction)
+-- Example: and1 with all boolean combinations
 #eval and1 false false  -- Expected: false
 #eval and1 false true   -- Expected: false
 #eval and1 true false   -- Expected: false
@@ -226,6 +239,7 @@ def or1 (b1: Bool) (b2: Bool) : Bool :=
     | true => true  -- If first is true, always true
 
 -- Test or1 (boolean disjunction)
+-- Example: or1 with all boolean combinations
 #eval or1 false false  -- Expected: false
 #eval or1 false true   -- Expected: true
 #eval or1 true false   -- Expected: true
@@ -287,9 +301,11 @@ def main : IO Unit := do
 #eval fact1 5
 
 -- String concatenation with conditional
+-- Example: conditional string append (false branch)
 #eval String.append "Who is the greatest theoretical physicist, it is " (if 1 > 2 then "Fermi" else "Dirac" )
 
 -- String concatenation with conditional (true branch)
+-- Example: conditional string append (true branch)
 #eval String.append "Who is the greatest theoretical physicist, it is " (if 10 > 2 then "Fermi" else "Dirac" )
 
 -- Simple string concatenation
@@ -316,9 +332,11 @@ def main : IO Unit := do
 --#eval (1 + "2") -- does not compile
 
 -- Subtraction with Nat (result is 0 if negative)
+-- Example: subtraction with Nat (result is 0 if negative)
 #eval (1 -2 : Nat) -- Nat
 
 -- Subtraction with Int (can be negative)
+-- Example: subtraction with Int (can be negative)
 #eval (1 - 2 : Int)
 
 -- #check allows us to inspect the type of an expression
@@ -394,3 +412,38 @@ def volume (height: Nat) (width: Nat) (depth: Nat) : Nat := height * width * dep
 #check (volume 2)
 -- #eval computes the volume for height=2, width=3, depth=4 (should be 24)
 #eval (volume 2 3 4)  -- Expected: 24
+
+
+-- Type alias for String
+def Str: Type := String
+-- Example string value
+def aStr : Str := "curry howard correspondence"
+#check (aStr)
+#eval aStr
+
+
+
+-- Type alias for Nat
+def NaturalNumber: Type := Nat
+-- Example natural number value
+def fortySeven : NaturalNumber := (47: Nat)
+#check (fortySeven)
+#eval (fortySeven)
+
+
+-- Abbreviation for Nat
+abbrev N : Type := Nat
+-- Example value using abbreviation
+def two: N := 2
+#check(N)
+#check N
+#check(two)
+#eval(two)
+
+-- Example: type check for a float literal
+#check (1.2)
+
+def origin : Pointv2 := {x := 0.0, y := 0.0}
+
+-- Structure definition for a 2D point with float coordinates
+
