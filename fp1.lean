@@ -1,3 +1,16 @@
+-- =============================================================================
+-- STRUCTURE EXAMPLE: 2D Point with Float Coordinates
+-- =============================================================================
+
+-- Define a structure for a 2D point with floating-point coordinates
+structure Pointv2 where
+    x : Float
+    y : Float
+
+-- Example: create a Pointv2 value representing the origin
+def origin2D : Pointv2 := {x := 0.0, y := 0.0}
+#check origin2D
+#eval origin2D
 -- Basic arithmetic functions
 -- add1: Increments a natural number by 1
 def add1 (n : Nat) : Nat := n + 1
@@ -446,4 +459,3 @@ def two: N := 2
 def origin : Pointv2 := {x := 0.0, y := 0.0}
 
 -- Structure definition for a 2D point with float coordinates
-
