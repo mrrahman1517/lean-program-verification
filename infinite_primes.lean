@@ -33,9 +33,7 @@ theorem infinite_primes : ∀ N : ℕ, ∃ p : ℕ, p > N ∧ Nat.Prime p := by
     -- p divides M = N! + 1
     have hM : p ∣ M := Nat.minFac_dvd M
     -- So p divides (N! + 1) - N! = 1
-    have : p ∣ 1 := by
-      have : Nat.factorial N + 1 = M := rfl
-      rw [← this] at hM
+    -- (handled below)
     -- Show N! ≤ M
     have hle : Nat.factorial N ≤ M := by
       dsimp [M]
