@@ -36,10 +36,22 @@ theorem infinite_primes : ∀ N : ℕ, ∃ p : ℕ, p > N ∧ Nat.Prime p := by
     have : p ∣ 1 := by
       have : Nat.factorial N + 1 = M := rfl
       rw [← this] at hM
-      have : Nat.factorial N ≤ Nat.factorial N + 1 := by omega
-      have : p ∣ (Nat.factorial N + 1 - Nat.factorial N) := Nat.dvd_sub hM hfact this
-      have : Nat.factorial N + 1 - Nat.factorial N = 1 := by omega
-      rwa [this]
+    -- Show N! ≤ M
+    have hle : Nat.factorial N ≤ M := by
+      dsimp [M]
+      omega
+    -- p ∣ (M - N!)
+    have hdiv : p ∣ (M - Nat.factorial N) := by
+      apply Nat.dvd_sub
+      · exact hM
+      · exact hfact
+
+    -- M - N! = 1
+    have hsub : M - Nat.factorial N = 1 := by
+      dsimp [M]
+      omega
+    rw [hsub] at hdiv
+    have : p ∣ 1 := hdiv
     -- But no prime divides 1
     have : ¬p ∣ 1 := Nat.Prime.not_dvd_one pp
     contradiction
