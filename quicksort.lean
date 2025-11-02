@@ -1,10 +1,10 @@
-/-
-  Quicksort correctness in Lean 4 + mathlib
+--
+--  Quicksort correctness in Lean 4 + mathlib
 
-  Requires:
-    - Lean 4
-    - mathlib (e.g., via `lake exe cache get` in a mathlib starter project)
--/
+--  Requires:
+--    - Lean 4
+--    - mathlib (e.g., via `lake exe cache get` in a mathlib starter project)
+--
 
 import Mathlib.Data.List.Perm
 import Mathlib.Data.List.Basic

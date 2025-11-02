@@ -71,30 +71,28 @@ where ~ denotes list permutation (same elements, possibly different order).
   and that recursive calls preserve permutations
 - Use transitivity of permutation relation to combine results
 -/
+-- For now, let's implement simpler versions that compile
 theorem qsort_perm (xs : List α) : qsort xs ~ xs := by
-  sorry  -- Proof requires complex permutation reasoning with mathlib lemmas
+  -- This is a challenging proof that requires strong induction
+  -- The key insight is that partitioning preserves all elements
+  -- and recursive calls on smaller lists preserve permutations
+  sorry  -- Complex proof left as advanced exercise
 
-/--
-**Theorem: Quicksort Correctness Property**
-
-States that quicksort produces a sorted output.
-This means the result satisfies the sorted predicate:
-for all adjacent elements a, b in the result, we have a ≤ b.
-
-In formal terms: ∀ xs : List α, (qsort xs).Sorted (· ≤ ·)
-
-**Proof Strategy (not implemented):**
-- Induction on the structure of the input list
-- Base cases ([] and [x]) are trivially sorted
-- Recursive case: prove that:
-  1. Recursive calls produce sorted sublists
-  2. All elements in left partition are ≤ pivot
-  3. All elements in right partition are > pivot
-  4. Concatenating sorted_left ++ [pivot] ++ sorted_right yields sorted result
-- Use mathlib's sorted_append lemmas to combine sorted segments
--/
 theorem qsort_sorted (xs : List α) : (qsort xs).Sorted (· ≤ ·) := by
-  sorry  -- Proof requires induction and sorted_append reasoning
+  -- Let's prove this for simple cases that we know work
+  induction xs with
+  | nil =>
+    -- Base case: empty list is sorted
+    simp [qsort]
+  | cons x xs ih =>
+    cases xs with  
+    | nil =>
+      -- Base case: singleton list is sorted
+      simp [qsort]
+    | cons y ys =>
+      -- For the complex recursive case, we need auxiliary lemmas
+      -- about the relationship between filtering and sorting
+      sorry  -- Complex proof requires more sophisticated techniques
 
 -- Runtime verification: check that the functions are properly defined
 #check qsort           -- qsort : List α → List α
@@ -105,6 +103,30 @@ theorem qsort_sorted (xs : List α) : (qsort xs).Sorted (· ≤ ·) := by
 -- #eval qsort [3, 1, 4, 1, 5]  -- Should return [1, 1, 3, 4, 5]
 
 end QuicksortVerification
+
+--
+-- ## About `sorry` in Lean 4
+--
+-- The `sorry` keyword is a **proof escape hatch** that tells Lean:
+-- "Accept this theorem as true without requiring a proof"
+--
+-- **What `sorry` does:**
+-- - Allows compilation of incomplete proofs
+-- - Enables rapid prototyping of theorem statements
+-- - Useful for focusing on algorithm implementation while deferring proof details
+-- - Acts as a "TODO" marker for proofs to be completed later
+--
+-- **Important warnings:**
+-- - `sorry` makes your formal verification incomplete
+-- - The theorems are *stated* but not *proven*
+-- - In production code, all `sorry`s should be replaced with real proofs
+-- - Lean will warn about `sorry` usage during compilation
+--
+-- **Next steps for complete verification:**
+-- 1. Replace `sorry` in `qsort_perm` with permutation induction proof
+-- 2. Replace `sorry` in `qsort_sorted` with sorted append reasoning
+-- 3. Use mathlib lemmas like `Perm.filter`, `List.sorted_append`, etc.
+--
 
 --
 -- ## Summary
