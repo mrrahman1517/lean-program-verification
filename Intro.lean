@@ -170,7 +170,7 @@ def f2 (n: Nat) : String :=
   | 0 => "small"        -- Exact match for 0
   | 1 => "small"        -- Exact match for 1
   | _ => "large"        -- Wildcard for all other cases
-  
+
 -- Test pattern matching
 #eval f2 2  -- Result: "large" (matches wildcard)
 #eval f2 1  -- Result: "small" (exact match)
@@ -180,7 +180,7 @@ Alternative syntax for pattern matching - more concise than match expressions.
 -/
 def f3 : Nat → String
   | 0 => "small"        -- Direct pattern syntax
-  | 1 => "small"        
+  | 1 => "small"
   | _ => "big"          -- Note: different return value for demonstration
 
 -- Test direct pattern matching
@@ -239,3 +239,101 @@ partial def quicksort (xs : List Nat) : List Nat :=
 #eval quicksort [5, 2, 8, 1, 9]                      -- Result: [1, 2, 5, 8, 9]
 #eval quicksort []                                    -- Result: [] (empty list)
 #eval quicksort [42]                                  -- Result: [42] (single element)
+
+-- ========================================
+-- SECTION 14: Proving Quicksort Correctness
+-- ========================================
+
+-- First, we need to define what it means for a list to be sorted
+def sorted (l : List Nat) : Prop :=
+  ∀ i j, i < j → j < l.length → l[i]! ≤ l[j]!
+
+-- Import the permutation relation from Mathlib (would need proper import)
+-- For now, we'll define a simple version
+def same_elements (l1 l2 : List Nat) : Prop :=
+  l1.length = l2.length ∧ ∀ x, l1.count x = l2.count x
+
+/-- Theorem: Quicksort produces a sorted list.
+This is the main correctness property we want to prove.
+-/
+theorem quicksort_sorted (l : List Nat) : sorted (quicksort l) := by
+  sorry  -- Proof would require induction and properties of filter/append
+
+/-- Theorem: Quicksort preserves all elements.
+The output contains exactly the same elements as the input.
+-/
+theorem quicksort_preserves_elements (l : List Nat) : same_elements l (quicksort l) := by
+  sorry  -- Proof would require showing elements are preserved through filtering
+
+-- For complete proofs of partial functions, we would need to:
+-- 1. Rewrite quicksort using well-founded recursion
+-- 2. Use Mathlib's List.Perm for permutation proofs
+-- 3. Use Mathlib's List.Sorted for sortedness proofs
+
+/-- A simpler, more practical approach: property testing.
+We can verify correctness for specific test cases computationally.
+-/
+
+/- Property-based testing: computational check for sortedness -/
+def is_sorted_list (l : List Nat) : Bool :=
+  match l with
+  | [] => true
+  | [_] => true
+  | x :: y :: rest => x ≤ y && is_sorted_list (y :: rest)
+
+-- Test our sorting property computationally
+#eval is_sorted_list (quicksort [3, 1, 4, 1, 5, 9, 2, 6])  -- Should return true
+#eval is_sorted_list [1, 3, 2, 4]  -- Should return false for comparison
+
+-- Verify that our quicksort produces sorted output for test cases
+example : is_sorted_list (quicksort [3, 1, 4]) = true := by
+  -- For partial functions, we use native computation
+  native_decide
+
+-- We can also define invariants that should hold
+def quicksort_invariant (input output : List Nat) : Prop :=
+  is_sorted_list output = true ∧ output.length = input.length
+
+-- Test the invariant on specific examples
+#check quicksort_invariant [3, 1, 4] (quicksort [3, 1, 4])
+
+/-
+To prove full correctness, you would typically:
+
+1. **Define a non-partial version using well-founded recursion:**
+   ```lean
+   def quicksort_wf (xs : List Nat) : List Nat :=
+     if h : xs = [] then []
+     else
+       have : xs.tail.length < xs.length := -- proof that tail is smaller
+       let pivot := xs.head!
+       let rest := xs.tail
+       let smaller := rest.filter (· ≤ pivot)
+       let larger := rest.filter (· > pivot)
+       quicksort_wf smaller ++ [pivot] ++ quicksort_wf larger
+   termination_by xs.length
+   ```
+
+2. **Prove helper lemmas:**
+   - `filter_preserves_elements`: filtering preserves multiset of elements
+   - `append_sorted`: appending maintains sortedness under conditions
+   - `partition_complete`: every element goes to exactly one partition
+
+3. **Main theorems:**
+   - Sortedness: `List.Sorted (≤) (quicksort_wf xs)`
+   - Permutation: `xs ~ quicksort_wf xs` (using `List.Perm`)
+-/
+
+-- Test our sorting property computationally (using the previously defined is_sorted_list)
+#eval is_sorted_list (quicksort [3, 1, 4, 1, 5, 9, 2, 6])  -- Should return true
+#eval is_sorted_list [1, 3, 2, 4]  -- Should return false for comparison
+
+-- Another approach: using List.Sorted from Mathlib (if available)
+-- #check List.Sorted  -- Would check if Mathlib's sorted predicate is available
+
+/-- Complete correctness statement combining both properties -/
+theorem quicksort_correct (l : List Nat) :
+  sorted (quicksort l) ∧ same_elements l (quicksort l) := by
+  constructor
+  · exact quicksort_sorted l
+  · exact quicksort_preserves_elements l
