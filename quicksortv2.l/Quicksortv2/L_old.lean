@@ -28,11 +28,11 @@ def qsort : List α → List α
   qsort L ++ x :: qsort R
 termination_by l => l.length
 decreasing_by
+  -- Length decreases since both filters are sublists of `xs`
   all_goals
     simp_wf
-    exact List.length_filter_le _ _
-
-/-!
+    rw [List.length_attach]
+    exact Nat.lt_of_le_of_lt (List.length_filter_le _ _) (Nat.lt_succ_self _)/-!
 Helper facts about membership and (co)bounds of the filtered partitions.
 -/
 
@@ -79,19 +79,48 @@ lemma perm_partition (x : α) (xs : List α) :
   | cons y ys ih =>
     by_cases h : y ≤ x
     · -- `y` goes to the left
-      rw [List.filter_cons_of_pos (fun z => z ≤ x) h]
-      rw [List.filter_cons_of_neg (fun z => z > x)]
-      · simp only [List.cons_append]
-        exact List.Perm.cons y ih
-      · intro h_gt
-        exact not_lt.mpr h h_gt
+      simp only [List.filter_cons_of_pos _ (decide_eq_true_iff.mpr h)]
+      simp only [List.filter_cons_of_neg _ (fun h_gt =>
+        not_lt.mpr h (decide_eq_true_iff.mp h_gt))]
+      simp only [List.cons_append]
+      exact List.Perm.cons y ih
     · -- `y` goes to the right: `¬ y ≤ x` ⇒ `x < y` by linearity
       have hy : x < y := lt_of_not_ge h
-      rw [List.filter_cons_of_neg (fun z => z ≤ x) h]
-      rw [List.filter_cons_of_pos (fun z => z > x) hy]
+      simp only [List.filter_cons_of_neg _ (decide_eq_true_iff.mp ∘ mt decide_eq_true_iff.mpr $ h)]
+      simp only [List.filter_cons_of_pos _ (decide_eq_true_iff.mpr hy)]
       simp only [List.nil_append, List.cons_append]
       rw [← List.cons_append]
       exact List.Perm.trans ih (List.Perm.cons x (List.Perm.swap y x ys))
+
+/-!
+Sortedness: we show an invariant that everything on the left is `≤ x`
+and everything on the right is `≥ x` (actually `>` in our split), and
+combine `Sorted` lists with a pivot sandwiched by bounds.
+-/
+
+/-- Every element of `xs.filter (· ≤ x)` is ≤ `x`. -/
+lemma all_le_left (x : α) (xs : List α) :
+    ∀ {y}, y ∈ xs.filter (· ≤ x) → y ≤ x := @mem_filter_le_pivot _ _ x
+
+/-- Every element of `xs.filter (· > x)` is ≥ `x`. -/
+lemma all_ge_right (x : α) (xs : List α) :
+    ∀ {y}, y ∈ xs.filter (· > x) → x ≤ y :=
+  fun hy => le_of_lt (mem_filter_gt_pivot hy)
+
+/-- If `l` is sorted, `r` is sorted, every element of `l` ≤ `x` and `x` ≤ every element of `r`,
+then `l ++ x :: r` is sorted. -/
+lemma sorted_append_pivot
+  {l r : List α} {x : α}
+  (hl : l.Sorted (· ≤ ·)) (hr : r.Sorted (· ≤ ·))
+  (hle : ∀ {y}, y ∈ l → y ≤ x) (hge : ∀ {y}, y ∈ r → x ≤ y)
+  : (l ++ x :: r).Sorted (· ≤ ·) := by
+  apply List.Sorted.append hl
+  apply List.Sorted.cons
+  · intro y hy
+    exact hle hy
+  · apply List.Sorted.append (List.sorted_singleton _) hr
+    intros y _ z hz
+    exact hge hz
 
 /-!
 Main theorems: qsort is a permutation and preserves sortedness.
@@ -113,19 +142,14 @@ theorem qsort_sorted (xs : List α) : (qsort xs).Sorted (· ≤ ·) := by
   | case1 => simp [qsort, List.sorted_nil]
   | case2 x xs ih_l ih_r =>
     simp only [qsort]
-    apply List.sorted_append
-    constructor
-    · exact ih_l
-    constructor
-    · constructor
-      · intro y hy
-        have h_perm : qsort (xs.filter (· ≤ x)) ~ xs.filter (· ≤ x) := qsort_perm _
-        have : y ∈ xs.filter (· ≤ x) := List.Perm.mem_iff h_perm ▸ hy
-        exact mem_filter_le_pivot this
-      · intro y hy z hz
-        have h_perm : qsort (xs.filter (· > x)) ~ xs.filter (· > x) := qsort_perm _
-        have : z ∈ xs.filter (· > x) := List.Perm.mem_iff h_perm ▸ hz
-        exact le_of_lt (mem_filter_gt_pivot this)
-    · exact ih_r
+    apply sorted_append_pivot ih_l ih_r
+    · intro y hy
+      have : y ∈ xs.filter (· ≤ x) := by
+        rwa [← List.perm_comm.mp (qsort_perm (xs.filter (· ≤ x)))]
+      exact all_le_left x xs this
+    · intro y hy
+      have : y ∈ xs.filter (· > x) := by
+        rwa [← List.perm_comm.mp (qsort_perm (xs.filter (· > x)))]
+      exact all_ge_right x xs this
 
 end QS

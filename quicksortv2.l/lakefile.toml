@@ -1,7 +1,7 @@
 name = "quicksortv2-l"
 version = "0.1.0"
 keywords = ["math"]
-defaultTargets = ["Quicksortv2.L"]
+defaultTargets = ["Quicksortv2.Quicksort"]
 
 [leanOptions]
 pp.unicode.fun = true # pretty-prints `fun a ↦ b`
@@ -14,4 +14,4 @@ name = "mathlib"
 scope = "leanprover-community"
 
 [[lean_lib]]
-name = "Quicksortv2.L"
+name = "Quicksortv2"
