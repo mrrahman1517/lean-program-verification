@@ -25,7 +25,7 @@ The Collatz conjecture (also known as the 3n+1 problem) states:
 - If x is even: divide by 2
 - If x is odd: multiply by 3 and add 1
 
-The conjecture is that starting from any positive integer, 
+The conjecture is that starting from any positive integer,
 this process will eventually reach 1.
 
 Hint: The remainder function is `%`. (e.g. `5 % 2 = 1`)

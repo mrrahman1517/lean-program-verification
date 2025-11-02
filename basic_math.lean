@@ -46,49 +46,49 @@ theorem squeeze_theorem (a b c : ℕ → ℝ) (L : ℝ)
   unfold seq_converges_to
   unfold seq_converges_to at a_to_L
   unfold seq_converges_to at c_to_L
-  
+
   -- Given ε > 0, we need to find N such that for n > N, |b n - L| < ε
   intro ε ε_pos
-  
+
   -- Step 1: Get witnesses from convergence of a and c
   -- Since a converges to L, there exists N₁ such that |a n - L| < ε for n > N₁
   obtain ⟨N₁, hN₁⟩ := a_to_L ε ε_pos
   -- Since c converges to L, there exists N₂ such that |c n - L| < ε for n > N₂
   obtain ⟨N₂, hN₂⟩ := c_to_L ε ε_pos
-  
+
   -- Step 2: Use the maximum of the two witnesses
   -- For n > max(N₁, N₂), both conditions from a and c will hold
   use max N₁ N₂
   intro n hn
-  
+
   -- Step 3: Show that n > max(N₁, N₂) implies n > N₁ and n > N₂
   have hn₁ : n > N₁ := by omega
   have hn₂ : n > N₂ := by omega
-  
+
   -- Step 4: Apply convergence bounds for a and c
   have ha : |a n - L| < ε := hN₁ n hn₁
   have hc : |c n - L| < ε := hN₂ n hn₂
-  
+
   -- Step 5: Extract the ordering constraints at index n
   have hab : a n ≤ b n := a_le_b n
   have hbc : b n ≤ c n := b_le_c n
-  
+
   -- Step 6: Convert absolute value inequalities to double inequalities
   -- |x| < ε means -ε < x < ε
   have ha_bounds : -ε < a n - L ∧ a n - L < ε := abs_lt.mp ha
   have hc_bounds : -ε < c n - L ∧ c n - L < ε := abs_lt.mp hc
-  
+
   -- Step 7: Use ordering to bound b n - L
   -- Since a n ≤ b n ≤ c n, we have a n - L ≤ b n - L ≤ c n - L
   have : a n - L ≤ b n - L := by linarith [hab]
   have : b n - L ≤ c n - L := by linarith [hbc]
-  
+
   -- Step 8: Combine all bounds
   -- We have: -ε < a n - L ≤ b n - L ≤ c n - L < ε
   -- This gives: -ε < b n - L < ε
   have h_left : -ε < b n - L := by linarith
   have h_right : b n - L < ε := by linarith
-  
+
   -- Step 9: Convert back to absolute value form
   -- -ε < b n - L < ε means |b n - L| < ε
   exact abs_lt.mpr ⟨h_left, h_right⟩

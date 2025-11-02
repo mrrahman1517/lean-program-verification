@@ -22,3 +22,6 @@ lean_exe «hello_world_01» where
 
 require mathlib from git
   "https://github.com/leanprover-community/mathlib4.git"
+
+lean_exe «infinite_primes» where
+  root := `infinite_primes

@@ -459,3 +459,26 @@ def two: N := 2
 def origin : Pointv2 := {x := 0.0, y := 0.0}
 
 -- Structure definition for a 2D point with float coordinates
+
+def addPoints (p1: Pointv2) (p2: Pointv2): Pointv2 := {
+    x := p1.x + p2.x, y := p1.y + p2.y
+}
+#check (addPoints)
+#eval addPoints {x := 15, y := 3.2} {x := 0.5, y := 1.1}
+
+def distance (p1: Pointv2) (p2: Pointv2): Float :=
+    Float.sqrt (Float.pow (p2.x - p1.x) 2.0 + Float.pow (p2.y - p1.y) 2.0)
+
+#check (distance)
+#eval distance {x := 15, y := 3.2} {x := 0.5, y := 1.1}
+
+def zeroX (p: Pointv2) : Pointv2 := {x := 0, y := p.y}
+def zeroXv2 (p: Pointv2) : Pointv2 := {p with x := 0}
+
+#eval zeroXv2 {x:= 2, y:= 3}
+
+def fourAndThree : Pointv2 := { x := 4.3, y := 3.4 }
+
+#eval fourAndThree
+#eval zeroXv2 fourAndThree
+#eval fourAndThree
