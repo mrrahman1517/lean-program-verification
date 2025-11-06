@@ -1,3 +1,5 @@
+import Mathlib.Tactic
+
 /-!
 # Topology: Composition of Continuous Functions
 
@@ -14,8 +16,6 @@ characterizations like preservation of limits.
 If f : X → Y and g : Y → Z are continuous functions between topological spaces,
 then their composition g ∘ f : X → Z is also continuous.
 -/
-
-import Mathlib.Tactic
 
 -- Declare three topological spaces X, Y, Z
 -- The square brackets indicate type class instances for the topology structure
