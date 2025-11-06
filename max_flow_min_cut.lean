@@ -10,6 +10,10 @@ Basic formalization of the Max Flow Min Cut theorem using simple Lean 4 construc
 def Vertex := Nat
 def Edge := Vertex × Vertex
 
+-- Add necessary instances for Vertex
+instance : DecidableEq Vertex := Nat.decEq
+instance (n : Nat) : OfNat Vertex n := ⟨n⟩
+
 -- Simple flow network 
 structure FlowNetwork where
   source : Vertex
@@ -18,8 +22,8 @@ structure FlowNetwork where
   capacity : Edge → Nat
   source_neq_sink : source ≠ sink
 
--- Flow function
-def Flow (N : FlowNetwork) := Edge → Nat
+-- Flow function: maps edges to natural numbers
+def Flow (_ : FlowNetwork) : Type := Edge → Nat
 
 -- Basic flow constraints
 namespace Flow
@@ -28,10 +32,10 @@ def satisfies_capacity (N : FlowNetwork) (f : Flow N) : Prop :=
   ∀ e ∈ N.edges, f e ≤ N.capacity e
 
 def outgoing_flow (N : FlowNetwork) (f : Flow N) (v : Vertex) : Nat :=
-  (N.edges.filter (fun e => e.1 == v)).map f |>.sum
+  (N.edges.filter (fun e => decide (e.1 = v))).map f |>.sum
 
 def incoming_flow (N : FlowNetwork) (f : Flow N) (v : Vertex) : Nat :=
-  (N.edges.filter (fun e => e.2 == v)).map f |>.sum
+  (N.edges.filter (fun e => decide (e.2 = v))).map f |>.sum
 
 def satisfies_conservation (N : FlowNetwork) (f : Flow N) : Prop :=
   ∀ v : Vertex, v ≠ N.source → v ≠ N.sink →
